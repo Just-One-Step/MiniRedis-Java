@@ -13,6 +13,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.DefaultThreadFactory;
+import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,15 +29,20 @@ public class RedisMiniServer implements RedisServer{
 
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
+    private EventExecutorGroup commandExecutor;
     private Channel serverChannel;
     private RedisCore redisCore;
+
+    public RespCommandHandler commandHandler;
 
     public RedisMiniServer(String host, int port) {
         this.host = host;
         this.port = port;
         this.bossGroup = new NioEventLoopGroup(1);
-        this.workerGroup = new NioEventLoopGroup(4);
+        this.workerGroup = new NioEventLoopGroup(Runtime.getRuntime().availableProcessors() * 2);
+        this.commandExecutor = new DefaultEventExecutorGroup(1, new DefaultThreadFactory("redis-cmd"));
         this.redisCore = new RedisCoreImpl(DEFAULT_DB_NUM);
+        this.commandHandler = new RespCommandHandler(redisCore);
     }
 
     @Override
@@ -48,7 +56,7 @@ public class RedisMiniServer implements RedisServer{
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         ChannelPipeline pipeline = socketChannel.pipeline();
                         pipeline.addLast(new RespDecoder());
-                        pipeline.addLast(new RespCommandHandler(redisCore));
+                        pipeline.addLast(commandExecutor, commandHandler);
                         pipeline.addLast(new RespEncoder());
 
                     }

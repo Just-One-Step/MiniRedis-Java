@@ -1,6 +1,7 @@
 package cn.sun.miniredis.server.core;
 
 import cn.sun.miniredis.database.RedisDB;
+import cn.sun.miniredis.datastructure.RedisBytes;
 import cn.sun.miniredis.datastructure.RedisData;
 
 import java.util.ArrayList;
@@ -23,19 +24,19 @@ public class RedisCoreImpl implements RedisCore {
     }
 
     @Override
-    public Set<byte[]> keys() {
+    public Set<RedisBytes> keys() {
         RedisDB db = databases.get(getCurrentDBIndex());
         return db.keys();
     }
 
     @Override
-    public void put(byte[] key, RedisData value) {
+    public void put(RedisBytes key, RedisData value) {
         RedisDB db = databases.get(getCurrentDBIndex());
         db.put(key, value);
     }
 
     @Override
-    public RedisData get(byte[] key) {
+    public RedisData get(RedisBytes key) {
         RedisDB db = databases.get(getCurrentDBIndex());
         if (db.exists(key)) {
             return db.get(key);
@@ -44,7 +45,7 @@ public class RedisCoreImpl implements RedisCore {
     }
 
     @Override
-    public void remove(byte[] key) {
+    public void remove(RedisBytes key) {
     }
 
     @Override

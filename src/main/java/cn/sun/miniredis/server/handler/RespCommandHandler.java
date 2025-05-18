@@ -2,6 +2,7 @@ package cn.sun.miniredis.server.handler;
 
 import cn.sun.miniredis.command.Command;
 import cn.sun.miniredis.command.CommandType;
+import cn.sun.miniredis.datastructure.RedisBytes;
 import cn.sun.miniredis.protocal.BulkString;
 import cn.sun.miniredis.protocal.Errors;
 import cn.sun.miniredis.protocal.Resp;
@@ -44,9 +45,9 @@ public class RespCommandHandler extends SimpleChannelInboundHandler<Resp> {
             // 获取命令和参数
             Resp[] array = respArray.getContent();
             // 获取命令名称
-            String commandName = new String(((BulkString) array[0]).getContent());
+            RedisBytes cmd = ((BulkString) array[0]).getContent();
             // 兼容小写
-            commandName = commandName.toUpperCase();
+            String commandName = cmd.toString().toUpperCase();
 
             CommandType commandType;
 

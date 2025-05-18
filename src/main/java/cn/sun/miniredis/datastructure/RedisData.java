@@ -1,4 +1,6 @@
 package cn.sun.miniredis.datastructure;
 
-public class RedisData {
+public interface RedisData {
+    long timeout();
+    void setTimeout(long timeout);
 }
