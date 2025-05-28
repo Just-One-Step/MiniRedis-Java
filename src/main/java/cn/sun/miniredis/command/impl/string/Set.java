@@ -7,6 +7,7 @@ import cn.sun.miniredis.datastructure.RedisData;
 import cn.sun.miniredis.datastructure.RedisString;
 import cn.sun.miniredis.internal.Sds;
 import cn.sun.miniredis.protocal.BulkString;
+import cn.sun.miniredis.protocal.Errors;
 import cn.sun.miniredis.protocal.Resp;
 import cn.sun.miniredis.protocal.SimpleString;
 import cn.sun.miniredis.server.core.RedisCore;
@@ -45,6 +46,8 @@ public class Set implements Command {
                 RedisString redisString = (RedisString) data;
                 redisString.setSds(new Sds(value.getBytes()));
                 return new SimpleString("OK");
+            } else {
+                return new Errors("WRONGTYPE Operation");
             }
         }
         redisCore.put(key, new RedisString(new Sds(value.getBytes())));

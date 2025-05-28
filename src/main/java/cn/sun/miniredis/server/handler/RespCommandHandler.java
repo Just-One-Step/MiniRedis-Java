@@ -8,11 +8,15 @@ import cn.sun.miniredis.protocal.Errors;
 import cn.sun.miniredis.protocal.Resp;
 import cn.sun.miniredis.protocal.RespArray;
 import cn.sun.miniredis.server.core.RedisCore;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Getter
+@Sharable
 public class RespCommandHandler extends SimpleChannelInboundHandler<Resp> {
 
     private final RedisCore redisCore;
