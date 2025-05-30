@@ -63,7 +63,7 @@ public class SkipList<T extends Comparable<T>> {
             rank[i] = (i == level - 1 ? 0 : rank[i + 1]);
             while (cur_node.levels[i].forward != null
                     && (cur_node.levels[i].forward.score < score ||
-                        (cur_node.levels[i].forward.score == score && compare((T)cur_node.levels[i].forward.member, member) < 0 ))) {
+                        (cur_node.levels[i].forward.score == score && compare((T) cur_node.levels[i].forward.member, member) < 0 ))) {
                 rank[i] += cur_node.levels[i].span;
                 cur_node = cur_node.levels[i].forward;
             }
@@ -117,7 +117,7 @@ public class SkipList<T extends Comparable<T>> {
         // 获取要删除的节点
         cur_node = cur_node.levels[0].forward;
         // 判断节点是否为空且满足条件
-        if (cur_node != null && cur_node.score == score && compare((T)cur_node.member, member) == 0) {
+        if (cur_node != null && cur_node.score == score && compare(cur_node.getMember(), member) == 0) {
             skipListDelete(cur_node, update);
             return true;
         }

@@ -86,9 +86,9 @@ public class Zrange implements Command {
 
             // 处理返回结果
             List<Resp> respList = new ArrayList<>();
-            for (SkipList.SkipListNode<RedisBytes> node : range) {
+            for (SkipList.SkipListNode node : range) {
                 if (node == null || node.getMember() == null) continue;
-                respList.add(new BulkString(node.getMember()));
+                respList.add(new BulkString((RedisBytes) node.getMember()));
                 // 需要返回分数
                 if (withScores) {
                     double score = node.getScore();

@@ -1,14 +1,13 @@
 package cn.sun.miniredis.datastructure;
 
-import lombok.Getter;
-
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class RedisBytes implements Comparable<RedisBytes> {
 
-    public static final Charset CHARSET = Charset.forName("UTF-8");
-    private byte[] bytes;
+    public static final Charset CHARSET = StandardCharsets.UTF_8;
+    private final byte[] bytes;
 
     public RedisBytes(byte[] bytes) {
         this.bytes = bytes;

@@ -56,7 +56,7 @@ public class Dict<K, V> {
     }
 
     public Dict() {
-        this.ht0 = new DictHashTable<K, V>(INITIAL_SIZE);
+        this.ht0 = new DictHashTable<>(INITIAL_SIZE);
         this.ht1 = null;
         this.rehashIndex = -1;
     }
@@ -114,7 +114,7 @@ public class Dict<K, V> {
         // 处于 Rehash 状态
         if (rehashIndex != -1) rehashStep();
 
-        V oldValue = null;
+        V oldValue;
         DictEntry<K, V> entry = find(key);
 
         // key 存在
