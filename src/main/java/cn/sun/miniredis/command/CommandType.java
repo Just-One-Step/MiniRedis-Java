@@ -10,6 +10,8 @@ import cn.sun.miniredis.command.impl.list.Lrange;
 import cn.sun.miniredis.command.impl.string.Get;
 import cn.sun.miniredis.command.impl.string.Set;
 import cn.sun.miniredis.command.impl.set.*;
+import cn.sun.miniredis.command.impl.zset.Zadd;
+import cn.sun.miniredis.command.impl.zset.Zrange;
 import cn.sun.miniredis.server.core.RedisCore;
 import lombok.Getter;
 
@@ -28,7 +30,10 @@ public enum CommandType {
     LRANGE(Lrange::new),
     HSET(Hset::new),
     HGET(Hget::new),
-    HDEL(Hdel::new);
+    HDEL(Hdel::new),
+    ZADD(Zadd::new),
+    ZRANGE(Zrange::new);
+
 
     private final Function<RedisCore, Command> supplier;
 

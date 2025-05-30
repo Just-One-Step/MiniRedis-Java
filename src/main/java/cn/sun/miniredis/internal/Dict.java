@@ -22,6 +22,13 @@ public class Dict<K, V> {
         return find(key) != null;
     }
 
+    public boolean contains(K key, V member) {
+        if (key == null) return false;
+        if (rehashIndex != -1) rehashStep();
+        DictEntry<K, V> entry = find(key);
+        return entry != null && entry.value.equals(member);
+    }
+
     static class DictEntry<K, V> {
         K key;
         V value;

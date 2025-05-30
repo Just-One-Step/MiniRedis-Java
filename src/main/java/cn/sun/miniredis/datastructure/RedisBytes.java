@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-public class RedisBytes {
+public class RedisBytes implements Comparable<RedisBytes> {
 
     public static final Charset CHARSET = Charset.forName("UTF-8");
     private byte[] bytes;
@@ -39,4 +39,8 @@ public class RedisBytes {
         return bytes;
     }
 
+    @Override
+    public int compareTo(RedisBytes o) {
+        return Arrays.compare(bytes, o.bytes);
+    }
 }
